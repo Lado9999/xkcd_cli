@@ -1,7 +1,6 @@
 #!/bin/sh
 
 get_by_num () {
-  echo $1
   curl -sL xkcd.com/$1 |						\
   grep src |								\
   grep -o 'imgs.xkcd.com\/comics\/[[:alnum:]_()]\+.\(jpg\|\|png\)' |	\
@@ -18,6 +17,7 @@ MAXNUM=$(curl -sL xkcd.com |				\
 	 grep -o '/[[:digit:]]\+/' | 			\
 	 sed s/'\/'//g)
 IMGNUM=$((1 + ($(date '+%s')*$$) % $MAXNUM))
+echo $IMGNUM
 get_by_num $IMGNUM
 else
 get_by_num $1
