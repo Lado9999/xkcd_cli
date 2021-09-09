@@ -14,13 +14,14 @@ get_by_num () {
 
 if [ -z $1 ]
 then
-MAXNUM=$(curl -sL xkcd.com |				\
-	 grep -i 'permanent link to this comic:' |	\
-	 grep -o '/[[:digit:]]\+/' | 			\
-	 sed s/'\/'//g)
-IMGNUM=$((1 + ($(date '+%s')*$$) % $MAXNUM))
-echo $IMGNUM
-get_by_num $IMGNUM
+  MAXNUM=$(curl -sL xkcd.com |				\
+	   grep -i 'permanent link to this comic:' |	\
+	   grep -o '\/[[:digit:]]\+\/' | 			\
+	   sed s/'\/'//g)
+
+  IMGNUM=$((1 + ($(date '+%s')*$$) % $MAXNUM))
+  echo $IMGNUM
+  get_by_num $IMGNUM 
 else
-get_by_num $1
+  get_by_num $1
 fi
