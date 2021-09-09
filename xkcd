@@ -1,14 +1,16 @@
 #!/bin/sh
 
 get_by_num () {
-  curl -sL xkcd.com/$1 |							\
-  grep src |									\
-  grep -io 'imgs.xkcd.com\/comics\/[[:alnum:]_()]\+.\(jpg\|\|png\|\|gif\)' |	\
-  tail -n1 |									\
-  xargs curl -so tmp.img && 							\
-  open tmp.img && 								\
-  rm tmp.img
+  URL=$(curl -sL xkcd.com/$1 |								\
+	grep src |									\
+	grep -io 'imgs.xkcd.com\/comics\/[[:alnum:]_()]\+.\(jpg\|\|png\|\|gif\)' |	\
+	tail -n1) 									
+  IMGEXT=$(echo $URL | grep -o '.\w\+$')
+  curl -so img$IMGEXT $URL &&								\
+  open img$IMGEXT && 									\
+  rm img$IMGEXT
 }
+
 
 if [ -z $1 ]
 then
