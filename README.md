@@ -3,4 +3,10 @@ This is a short ***/usr/sh*** script for fetching everybody's beloved **xkcd** c
 If the number is not given it is chosen at random. 
 
 Usage: \
+$ source xkcd [num]
+or
+$ ./xkcd [num]
+
+If you update **$PATH** to contain /path/to/xkcd you can simply write
+
 $ xkcd [num]
