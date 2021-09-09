@@ -1,0 +1,24 @@
+#!/bin/sh
+
+get_by_num () {
+  curl -sL xkcd.com/$1 |						\
+  grep src |								\
+  grep -o 'imgs.xkcd.com\/comics\/[[:alnum:]_()]\+.\(jpg\|\|png\)' |	\
+  xargs curl -so tmp.img && 						\
+  sxiv tmp.img && 							\
+  rm tmp.img
+}
+
+if [ -z $1 ]
+then
+MAXNUM=$(curl -sL xkcd.com |				\
+	 grep -i 'permanent link to this comic:' |	\
+	 grep -o '/[[:digit:]]\+/' | 			\
+	 sed s/'\/'//g)
+get_by_num $((1 + $(date '+%s') % $MAXNUM))
+else
+get_by_num $1
+fi
+
+
+
