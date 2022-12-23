@@ -1,13 +1,14 @@
 #!/bin/sh
 
 get_by_num () {
-  URL=$(curl -sL xkcd.com/$1 |								\
-	grep src |									\
+  URL=$(curl -sL xkcd.com/$1 |	\
+	grep src |										\
 	grep -io 'imgs.xkcd.com\/comics\/[[:alnum:]_()-]\+.\(jpg\|\|png\|\|gif\)' |	\
 	tail -n1) 									
   IMGEXT=$(echo $URL | grep -o '.\w\+$')
-  curl -so $1$IMGEXT $URL &&								\
-  open $1$IMGEXT && 									\
+  curl -so $1$IMGEXT $URL &&		\
+  open $1$IMGEXT && 						\
+  sleep 1 && 										\
   rm $1$IMGEXT
 }
 
@@ -23,5 +24,5 @@ then
   echo $IMGNUM
   get_by_num $IMGNUM 
 else
-  get_by_num $1
+	get_by_num $1
 fi
